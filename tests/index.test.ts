@@ -15,10 +15,10 @@ describe("SMSSarara", () => {
 });
 
 describe("OTP", () => {
-  let smsSarara: SMSSarara;
+  let client: SMSSarara;
 
   beforeEach(() => {
-    smsSarara = new SMSSarara({
+    client = new SMSSarara({
       apiKey: "my-api-key",
       otpKey: "my-otp-key",
     });
@@ -26,21 +26,24 @@ describe("OTP", () => {
 
   describe("sendOTP", () => {
     it("should make a POST request to the correct URL with the correct headers and body", async () => {
-      const mockResponse = { success: true };
+      const mockResponse = {
+        status: "success",
+        message: "OTP sent successfully",
+      };
       const mockFetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue(mockResponse),
       });
       global.fetch = mockFetch;
 
-      const mobile = "1234567890";
-      const expectedUrl = "http://localhost:3000/api/v1/otps/request";
+      const mobile = "9843xxxxxx";
+      const expectedUrl = "https://api.smssarara.app/api/v1/otps/request";
       const expectedHeaders = {
         "Content-Type": "application/json",
         OTP_TOKEN: "my-otp-key",
       };
       const expectedBody = JSON.stringify({ mobile });
 
-      const response = await smsSarara.sendOTP(mobile);
+      const response = await client.sendOTP(mobile);
 
       expect(mockFetch).toHaveBeenCalledWith(expectedUrl, {
         method: "POST",
@@ -53,7 +56,10 @@ describe("OTP", () => {
 
   describe("verifyOTP", () => {
     it("should make a POST request to the correct URL with the correct headers and body", async () => {
-      const mockResponse = { success: true };
+      const mockResponse = {
+        status: "success",
+        message: "Otp verified successfully",
+      };
       const mockFetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue(mockResponse),
       });
@@ -61,14 +67,14 @@ describe("OTP", () => {
 
       const mobile = "1234567890";
       const code = "123456";
-      const expectedUrl = "http://localhost:3000/api/v1/otps/verify";
+      const expectedUrl = "https://api.smssarara.app/api/v1/otps/verify";
       const expectedHeaders = {
         "Content-Type": "application/json",
         OTP_TOKEN: "my-otp-key",
       };
       const expectedBody = JSON.stringify({ mobile, code });
 
-      const response = await smsSarara.verifyOTP(mobile, code);
+      const response = await client.verifyOTP(mobile, code);
 
       expect(mockFetch).toHaveBeenCalledWith(expectedUrl, {
         method: "POST",

@@ -1,6 +1,6 @@
 {
   "name": "smssarara",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SMS sarara package for sending sms and otp.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

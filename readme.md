@@ -1,6 +1,6 @@
 ### SMSSarara
 
-SMSSarara is a simple SMS sending and receiving application.
+This is a simple SMS sending and receiving and otp client. It uses [SMS Sarara API](https://smssarara.com) to send and receive SMS.
 
 #### Installation
 
